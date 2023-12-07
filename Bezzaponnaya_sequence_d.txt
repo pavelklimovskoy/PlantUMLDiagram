@@ -1,0 +1,48 @@
+@startuml
+actor       User
+participant Sputnik
+database    Database
+queue       Server
+
+opt
+    User -> Sputnik: << 1 посмотреть сертификаты >>
+    deactivate User
+end
+activate User
+activate Sputnik
+
+par 
+    Sputnik -> Server: << 2 отправить запрос в очередь >>
+    activate Server
+
+    Sputnik -> Database: << 3 сохранить запрос в кэш >>
+    activate Database
+end
+
+
+alt операция успешна
+    Server --> Sputnik: << 4 передать ответ >>
+    Database --> Sputnik: << 5 передать данные >>
+    Sputnik -> Sputnik: << 6 отобразить сертификаты >>
+
+else истек Timeout
+    Server --> Sputnik: << 7 передать код ошибки >>
+    deactivate Server
+
+    loop 2 раза
+        Sputnik -> Database: << 8 сохранить лог ошибки >>
+        deactivate Database
+    end
+
+    alt ошибка А
+    Sputnik -> Sputnik: << 9 отобразить инструкцию А >>
+
+    else ошибка Б
+    Sputnik -> Sputnik: << 10 отобразить инструкцию Б >>
+
+    else ошибка В
+    Sputnik -> Sputnik: << 11 отобразить инструкцию В >>
+    end
+    deactivate Sputnik
+end
+@enduml

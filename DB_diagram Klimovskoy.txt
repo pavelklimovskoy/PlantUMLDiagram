@@ -1,0 +1,342 @@
+@startuml
+
+object PassportDetail {
+    PassportNumber
+    DateOfExpiry
+    DateOfIssue
+    PlaceOfIssue
+}
+
+
+object profile {
+    id
+    username
+    email
+    is_admin
+    is_activated
+    created_at
+    uploaded_cvs
+    avatar
+    credits
+}
+
+
+object CV {
+    id
+    file_info
+    document_info
+    cv_category
+    contact_info
+    work_info
+    personal_info
+    skill_info
+    qualification_info
+}
+
+
+object PhoneNumber {
+    id
+    Number
+    ISDCode
+    OriginalNumber
+    FormattedNumber
+    Type
+    ConfidenceScore
+}
+
+
+object web_site {
+    id
+    Type
+    Url
+}
+
+
+object CountryCode {
+    id
+    IsoAlpha2
+    IsoAlpha3
+    UNCode
+}
+
+
+object degree {
+    id
+    DegreeName
+    NormalizeDegree
+    Specialization
+    ConfidenceScore
+}
+
+
+object Location {
+    id
+    City
+    State
+    StateIsoCode
+    Country
+    country_code
+}
+
+
+object ApiInfo {
+    Metered
+    CreditLeft
+    AccountExpiryDate
+    BuildVersion
+}
+
+object Projects {
+    id
+    UsedSkills
+    ProjectName
+    TeamSize
+}
+
+object Language {
+    id
+    Language
+    LanguageCode
+}
+
+object Name {
+    id
+    FullName
+    TitleName
+    FirstName
+    MiddleName
+    LastName
+    FormattedName
+    ConfidenceScore
+}
+
+object Institution {
+    id
+    Name
+    Type
+    Location
+    ConfidenceScore
+}
+
+
+object Country {
+    id
+    country_code
+    Evidence
+}
+
+
+object Email {
+    id
+    EmailAddress
+    ConfidenceScore
+}
+
+
+object Address {
+    id
+    Street
+    location
+    ZipCode
+    FormattedAddress
+    Type
+    ConfidenceScore
+}
+
+
+object Salary {
+    id
+    Amount
+    Symbol
+    Currency
+    Unit
+    Text
+}
+
+object SegregatedQualification {
+    id
+    institution
+    degree
+    FormattedDegreePeriod
+    StartDate
+    EndDate
+    aggregate
+}
+
+
+object Aggregate {
+    id
+    Value
+    MeasureType
+}
+
+object SegregatedSkill {
+    id
+    Type
+    Skill
+    Ontology
+    Alias
+    FormattedName
+    Evidence
+    LastUsed
+    ExperienceInMonths
+}
+
+object EmailInfo {
+    id
+    EmailTo
+    EmailBody
+    EmailReplyTo
+    EmailSignature
+    EmailFrom
+    EmailSubject
+    EmailCC
+}
+
+
+object SegregatedExperience {
+    id
+    employer
+    job_profile
+    location
+    JobPeriod
+    FormattedJobPeriod
+    StartDate
+    EndDate
+    IsCurrentEmployer
+    JobDescription
+    projects
+}
+
+
+object Employer {
+    id
+    EmployerName
+    FormattedName
+    ConfidenceScore
+}
+
+
+object JobProfile {
+    id
+    Title
+    FormattedName
+    Alias
+    RelatedSkills
+    ConfidenceScore
+}
+
+
+object WorkedPeriod {
+    id
+    TotalExperienceInMonths
+    TotalExperienceInYear
+    TotalExperienceRange
+}
+
+
+object FileInfo {
+    id
+    cloud_url
+    uploaded_at
+    resume_file_name
+    ParsingDate
+}
+
+
+object DocumentInfo {
+    id
+    UniqueID
+    LicenseNo
+    passport_detail
+    PanNo
+    VisaStatus
+}
+
+
+object ContactInfo {
+    id
+    Emails
+    phone_numbers
+    email_info
+    WebSites
+}
+
+
+object PersonalInfo {
+    id
+    name
+    DateOfBirth
+    Gender
+    FatherName
+    MotherName
+    MaritalStatus
+    Nationality
+    LanguageKnown
+    Hobbies
+    Objectives
+    Achievements
+    location
+    resume_language
+    ResumeCountry
+    Address
+}
+
+
+object WorkInfo {
+    id
+    CurrentSalary
+    ExpectedSalary
+    Experience
+    CurrentEmployer
+    JobProfile
+    worked_period
+    GapPeriod
+    AverageStay
+    LongestStay
+    segregated_experience
+}
+
+
+object SkillInfo {
+    id
+    SkillBlock
+    SkillKeywords
+    segregated_skill
+}
+
+object QualificationInfo {
+    id,
+    Qualification,
+    segregated_qualification,
+}
+
+object CV_Category{
+    id,
+    Category,
+    SubCategory,
+}
+
+
+
+CV "1" -down- "1" CV_Category
+profile "1" -down- "1" CV
+CV "1" -down- "1" FileInfo
+PassportDetail "1" -down- "1" DocumentInfo
+DocumentInfo "1" -down- "1" CV
+
+SegregatedSkill "1" -down- "1" SkillInfo
+SkillInfo "1" -down- "1" CV
+
+SegregatedQualification "1" -down- "1" QualificationInfo
+QualificationInfo "1" -down- "1" CV
+
+SegregatedQualification "1" -down- "1" degree
+SegregatedQualification "1" -down- "1" Aggregate
+SegregatedQualification "1" -down- "1" Institution
+
+Institution "1" -down- "1" Location
+Location "1" -down- "1" CountryCode
+
+
+@enduml

@@ -1,0 +1,59 @@
+@startuml
+left to right direction
+
+actor A_User as U
+actor Guest as G
+actor Admin as A
+
+usecase "Upload photo" as UC1
+usecase "Upload CV" as UC3
+usecase "Add skills" as UC4
+usecase "Hide skills" as UC5 
+usecase "Job specification" as UC6
+usecase "Add sertificate from Coursera" as UC7
+usecase "Log out" as UC2
+U --> UC1
+U --> UC2
+U --> UC3
+U --> UC4
+U --> UC5
+U --> UC6
+U --> UC7
+
+usecase "Autorisation" as UC8
+usecase "Registration" as UC9
+
+G --> UC8
+G --> UC9
+
+usecase "Add new course" as UC10
+
+A --> UC10
+
+usecase "Change the profile pic in the DB" as UC11
+usecase "sending a resume for processing using the API" as UC12
+usecase "Checks the taxonomy's membership" as UC13
+usecase "Changes the skill status in the DB" as UC14
+usecase "selection of edu opportunities is carried out" as UC15
+usecase "Sertificate processing is in progress" as UC16
+
+usecase "Entering the processing result into the DB" as UC17
+usecase "Skill addition to the DB" as UC18
+usecase "entering the processing result into the DB" as UC19
+
+UC1 .down.> UC11
+UC3 .down.> UC12
+UC4 .down.> UC13
+UC5 .down.> UC14
+UC6 .down.> UC15
+UC7 .down.> UC16
+
+UC12 .down.> UC17
+UC13 .down.> UC18
+UC16 .down.> UC19
+
+usecase "The new course is entered into the system" as UC20 
+
+UC10 .down.> UC20
+
+@enduml
